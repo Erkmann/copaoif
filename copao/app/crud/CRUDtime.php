@@ -130,6 +130,16 @@ class CRUDtime
         }
     }
 
+    public function getCurtidaPorTime(Time $t)
+    {
+        $sql = "SELECT COUNT(*) as qtd_curtidas FROM `curtir` WHERE `time_id_time` = '{$t->getIdTime()}'";
+        $resultado = $this->conexao->query($sql)->fetch(PDO::FETCH_ASSOC);
+
+        $qtd_c = $resultado['qtd_curtidas'];
+
+        return $qtd_c;
+
+    }
 }
 
 

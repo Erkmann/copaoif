@@ -15,6 +15,7 @@
             session_start();
             $_SESSION['nome'] = $resultado->getNomeUsuario();
             $_SESSION['tipo'] = $resultado->getIdTipoUsuario();
+            $_SESSION['id'] = $resultado->getIdUsuario();
 
             return $_SESSION;
 
@@ -44,9 +45,6 @@
         include_once "../views/admin.php";
     }
 
-if(!isset($_GET['rota'])){
-    include_once "../views/erro.php";
-}
 
 if($_GET['rota'] == 'loginForm'){
     loginForm();

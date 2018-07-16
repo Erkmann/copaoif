@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: 16-Jul-2018 às 19:43
--- Versão do servidor: 10.2.12-MariaDB
--- PHP Version: 7.0.26
+-- Host: 127.0.0.1
+-- Generation Time: 16-Jul-2018 às 19:47
+-- Versão do servidor: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `id6474734_copao`
+-- Database: `copao`
 --
 
 -- --------------------------------------------------------
@@ -32,15 +32,6 @@ CREATE TABLE `curtir` (
   `usuario_id_usuario` int(4) NOT NULL,
   `time_id_time` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `curtir`
---
-
-INSERT INTO `curtir` (`usuario_id_usuario`, `time_id_time`) VALUES
-(11, 1),
-(12, 1),
-(12, 6);
 
 -- --------------------------------------------------------
 
@@ -163,21 +154,22 @@ CREATE TABLE `time` (
   `logo` varchar(55) NOT NULL,
   `nome_time` varchar(25) NOT NULL,
   `pontos` int(4) NOT NULL,
-  `cor` varchar(30) NOT NULL
+  `cor` varchar(30) NOT NULL,
+  `jogador_id_jogador` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `time`
 --
 
-INSERT INTO `time` (`id_time`, `logo`, `nome_time`, `pontos`, `cor`) VALUES
-(1, '../assets/imagens/logos/laranja.png', 'Tigers Outbreak', 0, 'Laranja'),
-(2, '../assets/imagens/logos/azul.png', 'Abiduzidos', 0, 'Azul'),
-(3, '../assets/imagens/logos/amarelo.png', 'Solares', 0, 'Amarelo'),
-(4, '../assets/imagens/logos/roxo.png', 'Vigaristas', 0, 'Roxo'),
-(5, '../assets/imagens/logos/vermelho.png', 'Socanelas', 0, 'Vermelho'),
-(6, '../assets/imagens/logos/preto.png', 'Maori', 0, 'Preto'),
-(7, '../assets/imagens/logos/servidores.png', 'Servidores', 0, 'Branco');
+INSERT INTO `time` (`id_time`, `logo`, `nome_time`, `pontos`, `cor`, `jogador_id_jogador`) VALUES
+(1, '../assets/imagens/logos/laranja.png', 'Tigers Outbreak', 0, 'Laranja', 0),
+(2, '../assets/imagens/logos/azul.png', 'Abiduzidos', 0, 'Azul', 0),
+(3, '../assets/imagens/logos/amarelo.png', 'Solares', 0, 'Amarelo', 0),
+(4, '../assets/imagens/logos/roxo.png', 'Vigaristas', 0, 'Roxo', 0),
+(5, '../assets/imagens/logos/vermelho.png', 'Socanelas', 0, 'Vermelho', 0),
+(6, '../assets/imagens/logos/preto.png', 'Maori', 0, 'Preto', 0),
+(7, '../assets/imagens/logos/servidores.png', 'Servidores', 0, 'Branco', 0);
 
 -- --------------------------------------------------------
 
@@ -219,8 +211,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `id_tipo_usuario`, `email`, `senha`) VALUES
 (9, 'Copão', 2, 'copaoif@gmail.com', '$2y$10$P4m8moJddRqfLCPPf06h2.bngnbl4y4Une0kptyrd6CNi0mI9juM6'),
 (10, 'Rafael', 1, 'rafael.speroni@ifc.edu.br', '$2y$10$vfJrndjL25215Rg58rVOBu6q2.GouKZwwcKT1iY23wDiR7Q8eOIla'),
-(11, 'joao.santos', 1, 'joaovitorjec@gmail.com', '$2y$10$ONhB0PsipiFleIbkb5aQdOkI.XfdnQry.CvEm7/Npe0JWRKP.07dO'),
-(12, 'Russo', 1, 'erkmann08@gmail.com', '$2y$10$yzDPP2siOh.Y08KOtnkuQ.2rZU7quppK1Qa5J6O1b5Cf.rNCMavTe');
+(11, 'joao.santos', 1, 'joaovitorjec@gmail.com', '$2y$10$ONhB0PsipiFleIbkb5aQdOkI.XfdnQry.CvEm7/Npe0JWRKP.07dO');
 
 --
 -- Indexes for dumped tables
@@ -252,7 +243,8 @@ ALTER TABLE `partida`
 -- Indexes for table `time`
 --
 ALTER TABLE `time`
-  ADD PRIMARY KEY (`id_time`);
+  ADD PRIMARY KEY (`id_time`),
+  ADD KEY `fk_time_jogador1_idx` (`jogador_id_jogador`);
 
 --
 -- Indexes for table `tipo_usuario`
@@ -275,7 +267,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `jogador`
 --
 ALTER TABLE `jogador`
-  MODIFY `id_jogador` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_jogador` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `partida`
@@ -299,7 +291,7 @@ ALTER TABLE `tipo_usuario`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_usuario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -324,6 +316,12 @@ ALTER TABLE `jogador`
 ALTER TABLE `partida`
   ADD CONSTRAINT `partida_ibfk_1` FOREIGN KEY (`id_time_mandante`) REFERENCES `time` (`id_time`),
   ADD CONSTRAINT `partida_ibfk_2` FOREIGN KEY (`id_time_visitante`) REFERENCES `time` (`id_time`);
+
+--
+-- Limitadores para a tabela `time`
+--
+ALTER TABLE `time`
+  ADD CONSTRAINT `fk_time_jogador1` FOREIGN KEY (`jogador_id_jogador`) REFERENCES `jogador` (`id_jogador`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `usuario`

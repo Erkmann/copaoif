@@ -1,6 +1,8 @@
 <?php
 require_once "../crud/CRUDtime.php";
 require_once "../crud/CRUDpartida.php";
+require_once "../crud/CRUDusuario.php";
+require_once "../crud/CRUDcurtir.php";
 
 function timeUpd($id){
 
@@ -41,15 +43,13 @@ function form(){
 
 }
 
-if(!isset($_GET['rota'])){
-    include_once "../views/erro.php";
-}
-
 if ($_GET["rota"] == "verTime"){
     $crudTime = new CRUDtime();
     $time = $crudTime->getTime($_GET["id"]);
     $jogadores = $crudTime->getJogadores($_GET["id"]);
     $partidas = $crudTime->getPartidasTime($_GET["id"]);
+    $curtidas = $crudTime->getCurtidaPorTime($time);
+
 
 
     require_once "../views/time.php";
@@ -74,3 +74,5 @@ if($_GET['rota'] == 'verA'){
 if ($_GET['rota'] == 'delete'){
     del($_GET['id']);
 }
+
+

@@ -55,15 +55,15 @@ elseif (isset($_SESSION) and $_SESSION['tipo'] == 2){
                     <tr>
                         <td><?= $a ?></td>
                         <td> <a href="TimeController.php?rota=verTime&id=<?= $t->getIdTime() ?>"><img class="d-block rounded-circle float-left" src="<?= $t->getLogo() ?>" width="40px" height="40px"></a><a href="TimeController.php?rota=verTime&id=<?= $t->getIdTIme() ?>"><?= $t->getNomeTime() ?></a></td>
-                        <td><?= $t->getPontos() ?></td>
-                    </tr>
-                    <?php $a += 1; endforeach;?>
+            <td><?= $t->getPontos() ?></td>
+            </tr>
+            <?php $a += 1; endforeach;?>
 
-                    </tbody>
-                </table>
-            </div>
+            </tbody>
+            </table>
         </div>
     </div>
+</div>
 </div>
 <div class="py-5">
     <div class="container">
